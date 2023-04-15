@@ -22,7 +22,7 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = Channel.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        channel = Channel.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
     @classmethod
@@ -33,7 +33,7 @@ class Channel:
 
     def to_json(self, name):
         '''сохраняет в файл значения атрибутов экземпляра `Channel`'''
-        with open(name, 'a+', encoding="utf-8") as f:
+        with open(name, 'w+', encoding="utf-8") as f:
             a = {'channel_id': self.__channel_id,
                  'title': self.title,
                  'description': self.description,
@@ -42,6 +42,30 @@ class Channel:
                  'video_count': self.video_count,
                  'views_count': self.views_count}
             json.dump(a, f, ensure_ascii=False)
+
+
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+
+    def __add__(self, other):
+        return self.subscribers_count + other.subscribers_count
+
+
+    def __sub__(self, other):
+        return self.subscribers_count - other.subscribers_count
+
+    def __lt__(self, other):
+        return self.subscribers_count < other.subscribers_count
+
+    def __le__(self, other):
+        return self.subscribers_count <= other.subscribers_count
+
+    def __eq__(self, other):
+        return self.subscribers_count == other.subscribers_count
+
+
+
 
 
 
