@@ -18,3 +18,6 @@ if __name__ == '__main__':
 
     # создаем файл 'vdud.json' в данными по каналу
     vdud.to_json('vdud.json')
+    # print(vdud.print_info())
+    # print(Channel.get_service())
+    # print(vdud.to_json('vdud.json'))
