@@ -13,7 +13,7 @@ class Channel:
         self.channel_info = Channel.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.title = self.channel_info['items'][0]['snippet']['title']#название канала
         self.description = self.channel_info['items'][0]['snippet']['description'] #описание канала
-        self.url = self.channel_info['items'][0]['snippet']['thumbnails']['default']['url']#ссылка на канал
+        self.url = "https://www.youtube.com/watch?v=" + channel_id #ссылка на канал
         self.subscribers_count = int(self.channel_info['items'][0]['statistics']['subscriberCount']) #количество подписчиков
         self.video_count = self.channel_info['items'][0]['statistics']['videoCount'] #количество видео
         self.views_count = self.channel_info['items'][0]['statistics']['viewCount'] #общее количество просмотров
@@ -49,7 +49,10 @@ class Channel:
 
 
     def __add__(self, other):
-        return self.subscribers_count + other.subscribers_count
+        if type(other) == Channel:
+            return self.subscribers_count + other.subscribers_count
+        else:
+            raise TypeError
 
 
     def __sub__(self, other):
